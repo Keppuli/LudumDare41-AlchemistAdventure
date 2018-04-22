@@ -139,5 +139,12 @@ public class Enemy : MonoBehaviour {
                 audioManager.GetComponent<AudioManager>().Play(teleportSound);
             }
         }
+        if (col.tag == "Player")
+        {
+            Hold();
+            Debug.Log("Enemy is touching Player");
+            mode = Mode.Idling;
+            col.gameObject.GetComponent<Player>().GetEaten();
+        }
     }
 }

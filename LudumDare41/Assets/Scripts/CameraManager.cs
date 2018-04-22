@@ -23,7 +23,7 @@ public class CameraManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
     }
 
-    void FixedUpdate()
+    void Update()
     {
 
         if (player) { 

@@ -7,16 +7,24 @@ public class Explosion : MonoBehaviour
 {
     public float fadeTimer = 1f;
     public float fadeMultiplier = 2f;
-
-    private new SpriteRenderer sr;
+    public enum Type { Normal, Freeze };
+    public Type type;
+    private SpriteRenderer sr;
     private AudioSource audioSource;
+    private Animator animator;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         GameObject _temp = GameObject.Find("TEMP"); // Trashcan for particles etc.
         transform.SetParent(_temp.transform);
         sr = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>(); // Play explosion sound on awake
+
+        if (type == Type.Freeze)
+        {
+            animator.SetTrigger("MakeIce");
+        }
     }
 
     void Update()

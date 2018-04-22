@@ -7,6 +7,8 @@ public class Portal : MonoBehaviour {
     public GameObject targetPortal;
     public bool disabled;
     public bool isEndPortal;
+    public bool isTutorialPortal;
+
     private Animator animator;
 
     private void Awake()
@@ -16,6 +18,11 @@ public class Portal : MonoBehaviour {
         if (isEndPortal)
         {
             animator.SetTrigger("MakeViolet");
+
+        }
+        if (isTutorialPortal)
+        {
+            animator.SetTrigger("MakeGreen");
 
         }
     }

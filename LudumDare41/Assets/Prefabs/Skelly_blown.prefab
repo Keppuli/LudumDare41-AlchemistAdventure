@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4304225718589866}
+  - component: {fileID: 114405624956106606}
   - component: {fileID: 212578758426524276}
   m_Layer: 0
   m_Name: Skelly_blown
@@ -40,6 +41,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114405624956106606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1566075161033148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f79ae725f8741c4eab3601070a98313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212578758426524276
 SpriteRenderer:
   m_ObjectHideFlags: 1

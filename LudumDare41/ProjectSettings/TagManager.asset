@@ -15,6 +15,9 @@ TagManager:
   - BombCollectable
   - Skelly
   - Canvas
+  - Water
+  - Barrel
+  - Ghost
   layers:
   - Default
   - TransparentFX

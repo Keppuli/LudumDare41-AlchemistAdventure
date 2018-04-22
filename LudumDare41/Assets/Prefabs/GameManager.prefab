@@ -51,6 +51,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b789bca78d0eb324cb0ce008660abe49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 9b86c423e25b221438502c66ebffe670, type: 3}
   image_hasKey: {fileID: 0}
   text_continue: {fileID: 0}
   text_bombAmount: {fileID: 0}
+  text_freezeBombAmount: {fileID: 0}
+  text_gamePaused: {fileID: 0}
+  gui_bomb: {fileID: 0}
+  gui_freezebomb: {fileID: 0}
+  gamePaused: 0
+  escKeyReserved: 0
+  audioManager: {fileID: 0}

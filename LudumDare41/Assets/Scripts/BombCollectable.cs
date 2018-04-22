@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BombCollectable : MonoBehaviour {
 
-    public int type; // 0 = basic 1 = ice
-
-	
+    public enum Type { Normal, Freeze };
+    public Type type;
+    public int amount;
 }

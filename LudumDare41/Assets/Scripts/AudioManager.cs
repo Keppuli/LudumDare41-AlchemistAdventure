@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
 
-    public AudioClip bombExplode;
-    public AudioClip playerBlown;
-    public AudioClip playerEaten;
-    public AudioClip playerTeleport;
-    public AudioClip enemyAttack;
     private AudioSource audioSource;
     void Awake()
     {

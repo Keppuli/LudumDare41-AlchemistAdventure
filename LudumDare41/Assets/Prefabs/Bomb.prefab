@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4037384774076302}
   - component: {fileID: 212798919786161570}
-  - component: {fileID: 114522095460636702}
-  - component: {fileID: 114756866214267020}
   - component: {fileID: 82202375075734622}
+  - component: {fileID: 114522095460636702}
+  - component: {fileID: 114617143619437670}
+  - component: {fileID: 114960331832973438}
   m_Layer: 2
   m_Name: Bomb
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1587009527980870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.161, y: -1.01, z: 0}
+  m_LocalPosition: {x: -4.091532, y: -3.5866404, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -149,7 +150,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f79ae725f8741c4eab3601070a98313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114756866214267020
+--- !u!114 &114617143619437670
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587009527980870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71ca671bca6f7c4090717d7f9e4a69e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionTimer: 2
+  explosionRadius: 1
+  explosionRadiusObj: {fileID: 1952848973322778, guid: 047689eefc61ebb4e8c851e9865d4e28,
+    type: 2}
+  explosion: {fileID: 1541733368418268, guid: fed8a1d89349ff244bb87c2b6f57a37c, type: 2}
+  allowExplosion: 1
+  explosionType: normal
+--- !u!114 &114960331832973438
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,9 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf849d87a5edbb4dad318b49baa2a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionTimer: 2
-  explosionRadius: 1
-  explosion: {fileID: 1541733368418268, guid: fed8a1d89349ff244bb87c2b6f57a37c, type: 2}
+  type: 0
+  freezeSprite: {fileID: 21300000, guid: 731d49a77760d6a4b8ee830b2a238155, type: 3}
 --- !u!212 &212798919786161570
 SpriteRenderer:
   m_ObjectHideFlags: 1

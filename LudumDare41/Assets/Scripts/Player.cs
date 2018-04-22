@@ -48,20 +48,43 @@ public class Player : MonoBehaviour
         {
             //bool spaceKeyFree = true; // Prevents Space doing multiple actions at single frame
             // HANDLE USE KEY
-            if (GameManager.bombs > 0)
-            { 
-                if (Input.GetKeyDown("space") || Input.GetKeyDown("e"))
-                {
-                    Vector3 bombPos = new Vector3(transform.position.x, transform.position.y+0.2f);
-                    //spaceKeyFree = false;   // Reserve space key for the duration of this frame
-                    Instantiate(bomb, bombPos, Quaternion.identity);
-                    GameManager.bombs -= 1;
-                }
+           
+            if (Input.GetKeyDown("space") || Input.GetKeyDown("e"))
+            {
+                Vector3 bombPos = new Vector3(transform.position.x, transform.position.y+0.2f);
+                //spaceKeyFree = false;   // Reserve space key for the duration of this frame
+                DropBomb();
             }
         }
 
     } // End update
  
+    void DropBomb()
+    {
+        Vector3 bombPos = new Vector3(transform.position.x, transform.position.y + 0.2f);
+        var bombType = GameManager.bombType;
+        if (bombType == GameManager.BombType.Normal)
+        {
+            if (GameManager.bombs > 0)
+            {
+                GameObject newBomb = Instantiate(bomb, bombPos, Quaternion.identity);
+                newBomb.GetComponent<Bomb>().type = Bomb.Type.Normal;
+                Debug.Log("Placed Normal bomb");
+
+            }
+        }
+        if (bombType == GameManager.BombType.Freeze)
+        {
+            if (GameManager.bombsFreeze > 0)
+            {
+                GameObject newBomb = Instantiate(bomb, bombPos, Quaternion.identity);
+                newBomb.GetComponent<Bomb>().type = Bomb.Type.Freeze;
+                Debug.Log("Placed Freezebomb");
+            }
+        }
+
+    }
+
     void Animate()
     {
  
@@ -118,7 +141,9 @@ public class Player : MonoBehaviour
             else if (!col.GetComponent<Portal>().disabled)
             {
                 Vector3 targetPortalPos = targetPortal.transform.position;
-                targetPortal.GetComponent<Portal>().disabled = true;
+                if (targetPortal.GetComponent<Portal>())    // Check if target portal is actually portal (other obj's can be used for one way tele)
+                    targetPortal.GetComponent<Portal>().disabled = true;
+
                 gameObject.transform.position = new Vector2(targetPortalPos.x, targetPortalPos.y);
                 audioManager.GetComponent<AudioManager>().Play(teleportSound);
             }
@@ -134,7 +159,11 @@ public class Player : MonoBehaviour
         if (col.tag == "BombCollectable")
         {
             Debug.Log("Trigger with BombC");
-            GameManager.bombs += 1;
+            if (col.gameObject.GetComponent<BombCollectable>().type == BombCollectable.Type.Freeze)
+                GameManager.bombsFreeze += col.gameObject.GetComponent<BombCollectable>().amount;
+            else
+                GameManager.bombs += col.gameObject.GetComponent<BombCollectable>().amount;
+
             audioManager.GetComponent<AudioManager>().Play(keyPick);
             Destroy(col.gameObject);
         }
@@ -153,7 +182,13 @@ public class Player : MonoBehaviour
                 Destroy(col.gameObject);
                 audioManager.GetComponent<AudioManager>().Play(gateUnlock);
             }
+        }
+        if (col.gameObject.tag == "Water")
+        {
+            Debug.Log("Collided with Water");
 
+            GetEaten();
+           
         }
     }
 
@@ -168,7 +203,6 @@ public class Player : MonoBehaviour
     public void BlowUp()
     {
         Instantiate(blown, transform.position, Quaternion.identity);
-        audioSource.PlayOneShot(dieSound, 1f);
         audioManager.GetComponent<AudioManager>().Play(blowUpSound);
         Hold();
         Destroy();
