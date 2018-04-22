@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     public AudioClip dieSound;
     public AudioClip teleportSound;
 
+    public GameObject blown;
     public GameObject triggerObject;
     public float moveSpeed = 1f;
     public float moveForceX; // added as velocity to RB2D
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        animator = GetComponent<Animator>();
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
         audioSource = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
@@ -36,16 +38,16 @@ public class Enemy : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
         if (mode == Mode.Idling)
-            if (!triggerObject)
+        {
+            animator.SetTrigger("Idle");
+        if (!triggerObject)
             {
-                if (!audioSource.isPlaying)
-                {
-                    audioSource.Play();
-                }
+                audioManager.GetComponent<AudioManager>().Play(attackSound);
                 mode = Mode.Attacking;
             }
-
+        }
 
         if (rb2d.velocity.x < 0f && facingRight)       // vel x -val and facing right
         {
@@ -60,10 +62,22 @@ public class Enemy : MonoBehaviour {
     private void FixedUpdate()
     {
         if (mode == Mode.Attacking)
+        {
+            animator.SetTrigger("Walk");
             MoveToTarget();
+        }
+
         else
             Hold(); // Reset velocity
             
+    }
+    public void BlowUp()
+    {
+        Instantiate(blown, transform.position, Quaternion.identity);
+        audioSource.PlayOneShot(dieSound, 1f);
+        audioManager.GetComponent<AudioManager>().Play(dieSound);
+
+        Destroy(gameObject);
     }
 
     void Flip() // Flips the player sprite
@@ -99,7 +113,8 @@ public class Enemy : MonoBehaviour {
         {
             Hold();
             Debug.Log("Enemy is touching Player");
-            //mode = Mode.Idling;
+            mode = Mode.Idling;
+            col.gameObject.GetComponent<Player>().GetEaten();
         }
     }
     void OnCollisionExit2D(Collision2D col)

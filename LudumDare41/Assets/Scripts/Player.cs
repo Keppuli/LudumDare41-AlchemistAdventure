@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public GameObject blown;
     public AudioClip keyPick;
     public AudioClip gateUnlock;
+    public AudioClip satanGameOverSound;
 
     public AudioClip dieSound;
     public AudioClip blowUpSound;
@@ -29,8 +30,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
-        //Ensure the script is not deleted while loading
-  
         GameManager.mode = GameManager.Mode.GameOn;
     }
 
@@ -53,8 +52,9 @@ public class Player : MonoBehaviour
             { 
                 if (Input.GetKeyDown("space") || Input.GetKeyDown("e"))
                 {
+                    Vector3 bombPos = new Vector3(transform.position.x, transform.position.y+0.2f);
                     //spaceKeyFree = false;   // Reserve space key for the duration of this frame
-                    Instantiate(bomb, transform.position, Quaternion.identity);
+                    Instantiate(bomb, bombPos, Quaternion.identity);
                     GameManager.bombs -= 1;
                 }
             }
@@ -64,28 +64,29 @@ public class Player : MonoBehaviour
  
     void Animate()
     {
+ 
         float absHS = Mathf.Abs(rb2d.velocity.x);
         float absVS = Mathf.Abs(rb2d.velocity.y);
         if (absHS > 0 || absVS > 0) // Check against absolute value
-        {           
+        {
             animator.SetTrigger("Walk");
         }
         else
         {
             animator.SetTrigger("Idle");
         }
-        if (Input.GetAxisRaw("Horizontal") < 0 && facingRight)    // Check against player input instead of rb.velocity, because slimes push player
+        if (Input.GetAxisRaw("Horizontal") < 0 && facingRight)
             Flip();
         else if (Input.GetAxisRaw("Horizontal") > 0 && !facingRight)
             Flip();
-
+        
     }
     void FixedUpdate()
     {
-        if (!disableInput)
+        if (mode == Mode.None)
         {
-            // ANIMATION
-            Animate();
+        // ANIMATION
+        Animate();
             // MOVEMENT
             curSpeed = moveSpeed;
         
@@ -108,14 +109,20 @@ public class Player : MonoBehaviour
         if (col.tag == "Portal")
         { 
             Debug.Log("Collided with Portal");
-            GameObject targetPortal = col.GetComponent<Portal>().targetPortal;
-            if (!col.GetComponent<Portal>().disabled)
+            GameObject targetPortal = col.GetComponent<Portal>().targetPortal; // Destination portal where this portal is linked
+            if (col.GetComponent<Portal>().isEndPortal)
+            {
+                audioManager.GetComponent<AudioManager>().Play(teleportSound);
+                GameManager.LoadNextLevel();
+            }
+            else if (!col.GetComponent<Portal>().disabled)
             {
                 Vector3 targetPortalPos = targetPortal.transform.position;
                 targetPortal.GetComponent<Portal>().disabled = true;
                 gameObject.transform.position = new Vector2(targetPortalPos.x, targetPortalPos.y);
                 audioManager.GetComponent<AudioManager>().Play(teleportSound);
             }
+
         }
         if (col.tag == "Key")
         {
@@ -136,14 +143,7 @@ public class Player : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy")
-        {
-            Debug.Log("Player collided with Enemy");
-            audioSource.PlayOneShot(dieSound, 1f);
-            audioManager.GetComponent<AudioManager>().Play(dieSound);
-
-            Destroy(gameObject);
-        }
+        
         if (col.gameObject.tag == "Gate")
         {
             Debug.Log("Collided with Gate");
@@ -156,13 +156,22 @@ public class Player : MonoBehaviour
 
         }
     }
+
+    public void GetEaten()
+    {
+        Hold();
+        mode = Mode.Dying;
+        Debug.Log("Player got eaten!");
+        audioManager.GetComponent<AudioManager>().Play(dieSound);
+        animator.SetTrigger("GetEaten");
+    }
     public void BlowUp()
     {
         Instantiate(blown, transform.position, Quaternion.identity);
         audioSource.PlayOneShot(dieSound, 1f);
         audioManager.GetComponent<AudioManager>().Play(blowUpSound);
-
-        Destroy(gameObject);
+        Hold();
+        Destroy();
     }
 
     public void Hold()
@@ -170,6 +179,11 @@ public class Player : MonoBehaviour
         rb2d.velocity = new Vector2(0f, 0f);
     }
 
+    public void Destroy()
+    {
+        audioManager.GetComponent<AudioManager>().Play(satanGameOverSound);
+        Destroy(gameObject);
+    }
     private void OnDestroy()
     {
         GameManager.mode = GameManager.Mode.GameOver;

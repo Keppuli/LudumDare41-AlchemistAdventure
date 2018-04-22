@@ -5,6 +5,7 @@ using UnityEngine;
 public class GUIManager : MonoBehaviour {
     void Awake()
     {
+        GetComponent<Canvas>().worldCamera = Camera.main;
         //Ensure the script is not deleted while loading
         DontDestroyOnLoad(this);
         //Make sure there are copies are not made of the GameObject when it isn't destroyed

@@ -13,6 +13,8 @@ TagManager:
   - Key
   - Gate
   - BombCollectable
+  - Skelly
+  - Canvas
   layers:
   - Default
   - TransparentFX

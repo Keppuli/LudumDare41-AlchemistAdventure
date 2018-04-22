@@ -19,7 +19,8 @@ public class Bomb : MonoBehaviour {
         if (explosionTimer <= 0)
         {
             //Debug.Log("Bomb destroyed.");
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            Vector3 ExplosionPos = new Vector3(transform.position.x, transform.position.y - 0.2f);
+            Instantiate(explosion, ExplosionPos, Quaternion.identity);
             Explode(transform.position);
             Destroy(gameObject);
         }
@@ -40,6 +41,14 @@ public class Bomb : MonoBehaviour {
                 if (colObj.tag == "Player")
                 {
                     colObj.GetComponent<Player>().BlowUp();
+                }
+                if (colObj.tag == "Player")
+                {
+                    colObj.GetComponent<Player>().BlowUp();
+                }
+                if (colObj.tag == "Skelly")
+                {
+                    colObj.GetComponent<Enemy>().BlowUp();
                 }
                 else
                     Destroy(colObj);

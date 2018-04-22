@@ -57,7 +57,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -220,6 +220,7 @@ MonoBehaviour:
   blown: {fileID: 1536029464215572, guid: 348ddd1d920fd7745a5cf04cb3dab105, type: 2}
   keyPick: {fileID: 8300000, guid: 1ff34fad40a1ebc4d9df97e8284946a8, type: 3}
   gateUnlock: {fileID: 8300000, guid: a4a5519994580124e988306fd712fb53, type: 3}
+  satanGameOverSound: {fileID: 8300000, guid: 9e9fd514a53155e44839a35b0e7f65b5, type: 3}
   dieSound: {fileID: 8300000, guid: d588b89c8cb8bbe469cf7e07fdda2d19, type: 3}
   blowUpSound: {fileID: 8300000, guid: 2d1c9d80c349c23408fb4a556ab9b7bd, type: 3}
   teleportSound: {fileID: 8300000, guid: 0d9b8e6c0b1e64747a8dc407d125e10b, type: 3}
