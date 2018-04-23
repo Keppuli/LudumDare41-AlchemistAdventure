@@ -40,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1563413934147692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -37.73, y: -5.4449816, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,9 +78,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06, y: 0.18}
+  m_Offset: {x: 0, y: 0.18}
   serializedVersion: 2
-  m_Radius: 0.18
+  m_Radius: 0.21
 --- !u!82 &82516680365877246
 AudioSource:
   m_ObjectHideFlags: 1
@@ -219,6 +219,7 @@ MonoBehaviour:
   bomb: {fileID: 1587009527980870, guid: 7909b5b4a604a4c4ea8a818c53712053, type: 2}
   blown: {fileID: 1536029464215572, guid: 348ddd1d920fd7745a5cf04cb3dab105, type: 2}
   keyPick: {fileID: 8300000, guid: 1ff34fad40a1ebc4d9df97e8284946a8, type: 3}
+  bombPickSound: {fileID: 8300000, guid: ab45d48ff0364ac40b1ba8a73ea40dcd, type: 3}
   gateUnlock: {fileID: 8300000, guid: a4a5519994580124e988306fd712fb53, type: 3}
   satanGameOverSound: {fileID: 8300000, guid: 9e9fd514a53155e44839a35b0e7f65b5, type: 3}
   dieSound: {fileID: 8300000, guid: d588b89c8cb8bbe469cf7e07fdda2d19, type: 3}

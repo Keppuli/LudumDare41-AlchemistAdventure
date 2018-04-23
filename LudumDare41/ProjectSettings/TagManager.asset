@@ -18,6 +18,7 @@ TagManager:
   - Water
   - Barrel
   - Ghost
+  - Bone
   layers:
   - Default
   - TransparentFX

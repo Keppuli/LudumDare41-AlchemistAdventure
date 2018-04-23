@@ -71,6 +71,11 @@ public class Explode : MonoBehaviour {
                     Debug.Log("Explosion hit barrel");
                     colObj.GetComponent<Explode>().allowExplosion = true;
                 }
+                else if (colObj.tag == "Bone")
+                {
+                    Debug.Log("Explosion hit bone");
+                    colObj.GetComponent<Rigidbody2D>().AddExplosionForce(1009,transform.position, 1500);
+                }
             }
 
         }

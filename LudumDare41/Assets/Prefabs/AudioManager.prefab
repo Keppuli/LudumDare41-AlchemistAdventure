@@ -34,8 +34,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1358226903005794}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.12783532, y: -1.0857376, z: 1.3117642}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19.47, y: -3.28, z: 1.3117642}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,11 +50,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 03ae81a4110683c4d8f1ff4ed463bfdf, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -147,8 +147,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41456e262ddb954fa1426f96323079b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombExplode: {fileID: 8300000, guid: bb0912b4c1300b64c8814d1e6bc27d2a, type: 3}
-  playerBlown: {fileID: 8300000, guid: 2d1c9d80c349c23408fb4a556ab9b7bd, type: 3}
-  playerEaten: {fileID: 8300000, guid: d588b89c8cb8bbe469cf7e07fdda2d19, type: 3}
-  playerTeleport: {fileID: 8300000, guid: 0d9b8e6c0b1e64747a8dc407d125e10b, type: 3}
-  enemyAttack: {fileID: 8300000, guid: fbfd02b1d3f92d04b96aa499702a73fb, type: 3}

@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     public GameObject bomb;
     public GameObject blown;
     public AudioClip keyPick;
+    public AudioClip bombPickSound;
+
     public AudioClip gateUnlock;
     public AudioClip satanGameOverSound;
 
@@ -164,7 +166,7 @@ public class Player : MonoBehaviour
             else
                 GameManager.bombs += col.gameObject.GetComponent<BombCollectable>().amount;
 
-            audioManager.GetComponent<AudioManager>().Play(keyPick);
+            audioManager.GetComponent<AudioManager>().Play(bombPickSound);
             Destroy(col.gameObject);
         }
 

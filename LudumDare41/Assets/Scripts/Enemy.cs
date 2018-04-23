@@ -8,7 +8,9 @@ public class Enemy : MonoBehaviour {
     public AudioClip dieSound;
     public AudioClip teleportSound;
 
-    public GameObject blown;
+    public GameObject bone;
+    public GameObject skull;
+
     public GameObject triggerObject;
     public float moveSpeed = 1f;
     public float moveForceX; // added as velocity to RB2D
@@ -73,9 +75,12 @@ public class Enemy : MonoBehaviour {
     }
     public void BlowUp()
     {
-        Instantiate(blown, transform.position, Quaternion.identity);
         audioSource.PlayOneShot(dieSound, 1f);
         audioManager.GetComponent<AudioManager>().Play(dieSound);
+        Instantiate(bone, transform.position, Quaternion.identity);
+        Instantiate(bone, transform.position, Quaternion.identity);
+        Instantiate(bone, transform.position, Quaternion.identity);
+        Instantiate(skull, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

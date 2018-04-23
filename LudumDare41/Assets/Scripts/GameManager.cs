@@ -74,6 +74,10 @@ public class GameManager : MonoBehaviour {
                 UnPause();
                 ReloadLevel();
             }
+            if (Input.GetKeyDown(KeyCode.Q) && gamePaused)
+            {
+                Application.Quit();
+            }
             if (Input.GetKeyDown(KeyCode.Escape) && !gamePaused)
             {
                 Pause();
@@ -121,7 +125,6 @@ public class GameManager : MonoBehaviour {
     }
     public static void ReloadLevel()
     {
-
         hasKey = false;
         bombs = 0;
         bombsFreeze = 0;
