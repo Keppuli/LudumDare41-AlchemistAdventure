@@ -17309,6 +17309,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8bd3d111debe414899e7cb5cbd415e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeDuration: 0
+  shakeAmount: 0.7
+  decreaseFactor: 1
   player: {fileID: 1573404572}
   smoothSpeed: 0.05
   cameraZ: -10
@@ -21007,6 +21010,10 @@ Prefab:
     - target: {fileID: 4986606307617460, guid: 682fe5268b38947419fd68b94f1a0cdc, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1111282471843744, guid: 682fe5268b38947419fd68b94f1a0cdc, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 682fe5268b38947419fd68b94f1a0cdc, type: 2}

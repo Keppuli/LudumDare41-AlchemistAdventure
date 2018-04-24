@@ -12,9 +12,18 @@ public class Explosion : MonoBehaviour
     private SpriteRenderer sr;
     private AudioSource audioSource;
     private Animator animator;
+    public Camera mainCamera;
+
+    private void Awake()
+    {
+    mainCamera = Camera.main;;
+    }
 
     private void Start()
     {
+        //CAMERA SHAKE
+        mainCamera.GetComponent<CameraManager>().shakeDuration = 0.1f;
+
         animator = GetComponent<Animator>();
         GameObject _temp = GameObject.Find("TEMP"); // Trashcan for particles etc.
         transform.SetParent(_temp.transform);
