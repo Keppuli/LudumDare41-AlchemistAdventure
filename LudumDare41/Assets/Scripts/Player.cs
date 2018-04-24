@@ -185,13 +185,7 @@ public class Player : MonoBehaviour
                 audioManager.GetComponent<AudioManager>().Play(gateUnlock);
             }
         }
-        if (col.gameObject.tag == "Water")
-        {
-            Debug.Log("Collided with Water");
 
-            GetEaten();
-           
-        }
     }
 
     public void GetEaten()

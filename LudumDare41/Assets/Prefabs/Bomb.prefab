@@ -24,6 +24,8 @@ GameObject:
   - component: {fileID: 114522095460636702}
   - component: {fileID: 114617143619437670}
   - component: {fileID: 114960331832973438}
+  - component: {fileID: 61612077448422076}
+  - component: {fileID: 50336162186100550}
   m_Layer: 2
   m_Name: Bomb
   m_TagString: Untagged
@@ -38,12 +40,57 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1587009527980870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.091532, y: -3.5866404, z: 0}
+  m_LocalPosition: {x: -22.976, y: 7.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50336162186100550
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587009527980870}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61612077448422076
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587009527980870}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0034341812, y: -0.001588583}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.3125, y: 0.4375}
+    newSize: {x: 0.3125, y: 0.4375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.9836903, y: 1.9880805}
+  m_EdgeRadius: 0
 --- !u!82 &82202375075734622
 AudioSource:
   m_ObjectHideFlags: 1
@@ -181,6 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   freezeSprite: {fileID: 21300000, guid: 731d49a77760d6a4b8ee830b2a238155, type: 3}
+  explosionType: normal
 --- !u!212 &212798919786161570
 SpriteRenderer:
   m_ObjectHideFlags: 1

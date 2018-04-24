@@ -9,7 +9,7 @@ public class Bomb : MonoBehaviour {
     public Type type;
     public Sprite freezeSprite;
     private SpriteRenderer sr;
-    string explosionType = "normal";
+    public string explosionType = "normal";
 
     private void Start()
     {

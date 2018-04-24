@@ -149,8 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTimer: 1
-  fadeMultiplier: 40
+  fadeMultiplier: 2
   type: 0
+  mainCamera: {fileID: 0}
 --- !u!212 &212617613169766130
 SpriteRenderer:
   m_ObjectHideFlags: 1

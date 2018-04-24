@@ -29,10 +29,11 @@ public class GameManager : MonoBehaviour {
     public static bool gamePaused = false;
     public static bool escKeyReserved = false;
     public GameObject audioManager;
+    public Camera mainCamera;
 
     void Awake()
     {
-
+        mainCamera = Camera.main; ;
         bombType = BombType.Normal;
         //Ensure the script is not deleted while loading
         DontDestroyOnLoad(this);
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour {
 
         if (mode == Mode.GameOver)
         {
+            mainCamera.GetComponent<CameraManager>().shakeDuration = 0f;
+
             text_continue.GetComponent<RandomTextColorNoPause>().enabled = true;
             text_continue.GetComponent<Text>().enabled = true;
             Time.timeScale = 0F;
@@ -113,6 +116,8 @@ public class GameManager : MonoBehaviour {
     }
     void Pause()
     {
+        mainCamera.GetComponent<CameraManager>().shakeDuration = 0f;
+
         Time.timeScale = 0F;
         gamePaused = true;
         text_gamePaused.GetComponent<Text>().enabled = true;
