@@ -3,7 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Destructible
+  - Indestructible
+  - Portal
+  - Enemy
+  - AudioManager
+  - GameManager
+  - Key
+  - Gate
+  - BombCollectable
+  - Skelly
+  - Canvas
+  - Water
+  - Barrel
+  - Ghost
+  - Bone
   layers:
   - Default
   - TransparentFX
@@ -13,7 +28,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,4 +55,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Terrain
+    uniqueID: 2748413213
+    locked: 0
+  - name: Player
+    uniqueID: 316764607
+    locked: 0
+  - name: GUI
+    uniqueID: 2839503069
     locked: 0
