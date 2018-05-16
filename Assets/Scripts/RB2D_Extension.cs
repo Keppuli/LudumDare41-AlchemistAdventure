@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
+// This will extend Rigid Body 2D component automatically
 public static class RB2D_Extension
 {
-
     public static void AddExplosionForce(this Rigidbody2D rb, float explosionForce, Vector2 explosionPosition, float explosionRadius, float upwardsModifier = 0.0F, ForceMode2D mode = ForceMode2D.Force)
     {
         var explosionDir = rb.position - explosionPosition;

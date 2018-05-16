@@ -8,90 +8,86 @@ public class Enemy : MonoBehaviour {
     public AudioClip dieSound;
     public AudioClip teleportSound;
 
-    public GameObject bone;
+    // References to instances which are spawned when enemy(skeleton) dies
+    public GameObject bone; 
     public GameObject skull;
 
-    public GameObject triggerObject;
+    public GameObject triggerObject; // Obj that needs to be destroyed(wall,gate) for the enemy to be activated
     public float moveSpeed = 1f;
     public float moveForceX; // added as velocity to RB2D
     public float moveForceY; // added as velocity to RB2D
-    public bool facingRight = false;
-    public bool touchingTarget = false;
 
+    // Basic AI state machine base
     public enum Mode { Attacking, Dying,Idling};
     public Mode mode;
 
     private Rigidbody2D rb2d;
     public GameObject player;
-    private AudioSource audioSource;
     private Animator animator;
     private SpriteRenderer sr;
     public GameObject audioManager;
 
-    // Use this for initialization
     void Start () {
         animator = GetComponent<Animator>();
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
-        audioSource = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
+
+        // Automatically set some references
         player = GameObject.FindWithTag("Player");
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager");
+
     }
 
-    // Update is called once per frame
     void Update () {
 
         if (mode == Mode.Idling)
         {
             animator.SetTrigger("Idle");
-        if (!triggerObject)
+
+            // If trigger obj is destroyed, activate enemy
+            if (!triggerObject)
             {
                 audioManager.GetComponent<AudioManager>().Play(attackSound);
                 mode = Mode.Attacking;
             }
         }
 
-        if (rb2d.velocity.x < 0f && facingRight)       // vel x -val and facing right
-        {
-            Flip();
-        }
-        else if (rb2d.velocity.x > 0f && !facingRight) // vel x +val and facing left
-        {
-            Flip();
-        }
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (mode == Mode.Attacking)
         {
             animator.SetTrigger("Walk");
             MoveToTarget();
         }
-
+        // Reset velocity if mode is suddenly changed(when player dies etc.)
         else
-            Hold(); // Reset velocity
+            Hold(); 
             
     }
-    public void BlowUp()
+    // Blow up to pieces (only used for skelly)
+    public void BlowUp(Vector3 explosionPosition)
     {
-        audioSource.PlayOneShot(dieSound, 1f);
         audioManager.GetComponent<AudioManager>().Play(dieSound);
-        Instantiate(bone, transform.position, Quaternion.identity);
-        Instantiate(bone, transform.position, Quaternion.identity);
-        Instantiate(bone, transform.position, Quaternion.identity);
-        Instantiate(skull, transform.position, Quaternion.identity);
 
+        // Create few bones
+        for (int i = 0; i < 3; i++)
+        {
+            // Instantiate and make reference to new bone 
+            GameObject newBone = Instantiate(bone, transform.position, Quaternion.identity);
+
+            // Feed new bone the information where explosion came from
+            newBone.GetComponent<Bone>().explosionPosition = explosionPosition; 
+        }
+        // Only one skull
+        GameObject newSkull = Instantiate(skull, transform.position, Quaternion.identity);
+        newSkull.GetComponent<Bone>().explosionPosition = explosionPosition;
+
+        // Destroy skelly
         Destroy(gameObject);
     }
 
-    void Flip() // Flips the player sprite
-    {
-        facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
 
     void MoveToTarget()
     {

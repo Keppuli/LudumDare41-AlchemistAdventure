@@ -9,24 +9,25 @@ public class EndScreen : MonoBehaviour {
     private GameObject gameManager;
     private GameObject canvas;
 
-
-    // Use this for initialization
     void Awake () {
+
+        // Automatically set references
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
         canvas = GameObject.FindGameObjectWithTag("Canvas");
-
+        // These have to be specifically destroyed due to them using (DontDestroyOnLoad(this))
         Destroy(audioManager);
         Destroy(gameManager);
         Destroy(canvas);
 
     }
 
-    // Update is called once per frame
     void Update () {
 
         if (Input.GetKeyDown("enter") || Input.GetKeyDown(KeyCode.Return))
         {
+
+            // Loads Main menu
             GameManager.ResetGame();
         }
     }

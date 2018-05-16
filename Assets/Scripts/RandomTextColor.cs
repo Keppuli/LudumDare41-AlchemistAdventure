@@ -5,20 +5,20 @@ using UnityEngine.UI;
 public class RandomTextColor : MonoBehaviour
 {
     public Color32 textColor32;    // The color that will be randomly set and
-    private Text textObject;        // The Text object that we want to edit.
+    private Text textObject;       // The Text object that we want to edit.
     public int R;
     public int G;
     public int B;
     public int A;
     public float frequency;
-    private IEnumerator coroutine;
+    private IEnumerator coroutine; // Using coroutine to get controllable pause between text randomization
 
     void Awake()
     {
         coroutine = ChangeColor();
         StartCoroutine(coroutine);
 
-        textObject = this.GetComponent<Text>();
+        textObject = GetComponent<Text>(); // Default text object to control is this object
     }
 
     void RandomizeTextColor()

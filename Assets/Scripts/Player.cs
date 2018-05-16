@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public GameObject bomb;
     public GameObject blown;
-    public AudioClip keyPick;
+    public AudioClip keyPickSound;
     public AudioClip bombPickSound;
 
     public AudioClip gateUnlock;
@@ -15,64 +15,66 @@ public class Player : MonoBehaviour
     public AudioClip dieSound;
     public AudioClip blowUpSound;
     public AudioClip teleportSound;
-    public GameObject audioManager;
 
-    public bool disableInput;
-    public bool facingRight;
     public enum Mode { None,Teleporting,Dying};
     public Mode mode;
+
     public float moveSpeed;
     public float curSpeed;
     public float movementModifier;
-    private AudioSource audioSource;
-    private Rigidbody2D rb2d;
+
+    private Rigidbody2D rb;
     private Animator animator;
-    private SpriteRenderer spriteRenderer;
+    public GameObject audioManager;
 
     void Awake()
     {
+        // Automatically set reference to Audio Manager, usually lost with Scene load
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
+
+        // Player spawning acts as a trigger to start game after game over
         GameManager.mode = GameManager.Mode.GameOn;
     }
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rb2d = GetComponent<Rigidbody2D>();
+        // Set component references
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        mode = Mode.None;
+
+        // Set default mode for the player
+        mode = Mode.None;   
     }
-    private void Update()
+
+    void Update()
     {
-        Animate();
         if (mode == Mode.None)
         {
-            //bool spaceKeyFree = true; // Prevents Space doing multiple actions at single frame
-            // HANDLE USE KEY
-           
+            // Call player to be animated
+            Animate();
+
+            // Handle use key
             if (Input.GetKeyDown("space") || Input.GetKeyDown("e"))
             {
-                Vector3 bombPos = new Vector3(transform.position.x, transform.position.y+0.2f);
-                //spaceKeyFree = false;   // Reserve space key for the duration of this frame
                 DropBomb();
             }
         }
-
-    } // End update
+    } 
  
+    // Spawns instance of a selected bomb type
     void DropBomb()
     {
+        // Set position for bomb instance with slight Y-axis offset to get the bomb behind player
         Vector3 bombPos = new Vector3(transform.position.x, transform.position.y + 0.2f);
-        var bombType = GameManager.bombType;
+
+        // Check what bomb type is selected in GUI and instantiate according to that
+        var bombType = GameManager.bombType; 
         if (bombType == GameManager.BombType.Normal)
         {
             if (GameManager.bombs > 0)
             {
                 GameObject newBomb = Instantiate(bomb, bombPos, Quaternion.identity);
-                newBomb.GetComponent<Bomb>().type = Bomb.Type.Normal;
-                Debug.Log("Placed Normal bomb");
-
+                newBomb.GetComponent<Bomb>().type = Bomb.Type.Normal; // Set type of the bomb on the fly. This modularily sets graphics and explosion in Bomb.cs.
             }
         }
         if (bombType == GameManager.BombType.Freeze)
@@ -80,72 +82,70 @@ public class Player : MonoBehaviour
             if (GameManager.bombsFreeze > 0)
             {
                 GameObject newBomb = Instantiate(bomb, bombPos, Quaternion.identity);
-                newBomb.GetComponent<Bomb>().type = Bomb.Type.Freeze;
-                Debug.Log("Placed Freezebomb");
+                newBomb.GetComponent<Bomb>().type = Bomb.Type.Freeze; // Set type of the bomb on the fly. This modularily sets graphics and explosion in Bomb.cs.
             }
         }
-
     }
 
+    // Reads player velocity and sets animation accordingly
     void Animate()
     {
- 
-        float absHS = Mathf.Abs(rb2d.velocity.x);
-        float absVS = Mathf.Abs(rb2d.velocity.y);
-        if (absHS > 0 || absVS > 0) // Check against absolute value
+        // Change velocity to absolute values, for easier usage
+        float absHS = Mathf.Abs(rb.velocity.x);
+        float absVS = Mathf.Abs(rb.velocity.y);
+        // Check against absolute values
+        if (absHS > 0 || absVS > 0) // If more than 0 player is moving
         {
             animator.SetTrigger("Walk");
         }
-        else
+        else // If 0 player must be idling
         {
             animator.SetTrigger("Idle");
         }
-        if (Input.GetAxisRaw("Horizontal") < 0 && facingRight)
-            Flip();
-        else if (Input.GetAxisRaw("Horizontal") > 0 && !facingRight)
-            Flip();
+
         
     }
+
+    // Update method for physics
     void FixedUpdate()
     {
         if (mode == Mode.None)
         {
-        // ANIMATION
-        Animate();
             // MOVEMENT
             curSpeed = moveSpeed;
-        
-            float horizontalSpeed = Input.GetAxisRaw("Horizontal");// GetAxis vs GetAxisRaw?
+            // Read raw movement key data
+            float horizontalSpeed = Input.GetAxisRaw("Horizontal");// GetAxis vs. GetAxisRaw?
             float verticalSpeed = Input.GetAxisRaw("Vertical");
-            rb2d.velocity = new Vector2(Mathf.Lerp(0, horizontalSpeed * curSpeed * movementModifier, 1f), Mathf.Lerp(0, verticalSpeed * curSpeed * movementModifier, 1f));
+            // Calculate new velocity for the player from set speed and modifiers + Lerp it to keep more constant rate
+            rb.velocity = new Vector2(Mathf.Lerp(0, horizontalSpeed * curSpeed * movementModifier, 1f), Mathf.Lerp(0, verticalSpeed * curSpeed * movementModifier, 1f));
         }
 
     }
-    void Flip() // Flips the player sprite
-    {
-        facingRight = !facingRight;
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
 
+
+
+    // For objects lacking collision
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Portal")
+        if (col.tag == "Portal") // (Portal tag can be used to also receive teleportation )
         { 
-            Debug.Log("Collided with Portal");
+            Debug.Log("Collided with Portal tagged object.");
             GameObject targetPortal = col.GetComponent<Portal>().targetPortal; // Destination portal where this portal is linked
+
+            // Check if portal is marked as being end portal (violet)
             if (col.GetComponent<Portal>().isEndPortal)
             {
                 audioManager.GetComponent<AudioManager>().Play(teleportSound);
-                GameManager.LoadNextLevel();
+                GameManager.SaveHighScore();
+                GameManager.LoadNextLevel(); 
             }
-            else if (!col.GetComponent<Portal>().disabled)
+            else if (col.GetComponent<Portal>().enabled)
             {
                 Vector3 targetPortalPos = targetPortal.transform.position;
                 if (targetPortal.GetComponent<Portal>())    // Check if target portal is actually portal (other obj's can be used for one way tele)
-                    targetPortal.GetComponent<Portal>().disabled = true;
+                    targetPortal.GetComponent<Portal>().enabled = false; // Temporarily disable the portal to avoid teleportation loop
 
+                // Calculate the teleportation coordinates for player
                 gameObject.transform.position = new Vector2(targetPortalPos.x, targetPortalPos.y);
                 audioManager.GetComponent<AudioManager>().Play(teleportSound);
             }
@@ -153,25 +153,27 @@ public class Player : MonoBehaviour
         }
         if (col.tag == "Key")
         {
-            Debug.Log("Trigger with Key");
+            Debug.Log("Trigger with Key.");
             GameManager.hasKey = true;
-            audioManager.GetComponent<AudioManager>().Play(keyPick);
-            Destroy(col.gameObject);
+            // Destroy collectable object as it is now collected
+            DestroyObject(col.gameObject, keyPickSound);
         }
         if (col.tag == "BombCollectable")
         {
-            Debug.Log("Trigger with BombC");
+            Debug.Log("Trigger with Bomb Collectable.");
             if (col.gameObject.GetComponent<BombCollectable>().type == BombCollectable.Type.Freeze)
-                GameManager.bombsFreeze += col.gameObject.GetComponent<BombCollectable>().amount;
+                // Check the amount of bombs collectable holds and send it to the Game Manager treshold check
+                GameManager.BombTresholdCheck("bombsFreeze", col.gameObject.GetComponent<BombCollectable>().amount);
             else
-                GameManager.bombs += col.gameObject.GetComponent<BombCollectable>().amount;
+                // Check the amount of bombs collectable holds and send it to the Game Manager treshold check
+                GameManager.BombTresholdCheck("bombs", col.gameObject.GetComponent<BombCollectable>().amount);
 
-            audioManager.GetComponent<AudioManager>().Play(bombPickSound);
-            Destroy(col.gameObject);
+            // Destroy collectable object as it is now collected
+            DestroyObject(col.gameObject, bombPickSound);
         }
-
-
     }
+
+    // For objects with collision enabled
     void OnCollisionEnter2D(Collision2D col)
     {
         
@@ -181,41 +183,55 @@ public class Player : MonoBehaviour
             if (GameManager.hasKey)
             {
                 GameManager.hasKey = false;
-                Destroy(col.gameObject);
-                audioManager.GetComponent<AudioManager>().Play(gateUnlock);
+                DestroyObject(col.gameObject, gateUnlock);
+                
             }
         }
 
     }
 
+    // Called to destroy collectable items and unlocked gates
+    public void DestroyObject(GameObject obj, AudioClip destroySound)
+    {
+        Destroy(obj);
+        audioManager.GetComponent<AudioManager>().Play(destroySound);
+    }
+
+    // Used when enemies touch player or player drops to water(removed in v1.0.1)
     public void GetEaten()
     {
         Hold();
         mode = Mode.Dying;
         Debug.Log("Player got eaten!");
         audioManager.GetComponent<AudioManager>().Play(dieSound);
-        animator.SetTrigger("GetEaten");
+        animator.SetTrigger("GetEaten"); // Animation that triggers Destroy() with animation event
     }
+
+    // Used when player touches explosion
     public void BlowUp()
     {
         Instantiate(blown, transform.position, Quaternion.identity);
         audioManager.GetComponent<AudioManager>().Play(blowUpSound);
-        Hold();
-        Destroy();
+        Hold(); // Stop physics
+        DestroyObject(gameObject, satanGameOverSound); // Destroy this.gameObject
     }
 
+    // Stop player velocity
     public void Hold()
     {
-        rb2d.velocity = new Vector2(0f, 0f);
+        rb.velocity = new Vector2(0f, 0f);
     }
 
-    public void Destroy()
+    // Triggered with animation event inside "GetEaten". This lets the animation play to the end before restarting the game
+    void Destroy()
     {
         audioManager.GetComponent<AudioManager>().Play(satanGameOverSound);
         Destroy(gameObject);
     }
-    private void OnDestroy()
+    // Method automatically called when player obj is destroyed
+    void OnDestroy()
     {
+        // Player acts as a trigger for game over when destroyed
         GameManager.mode = GameManager.Mode.GameOver;
     }
 

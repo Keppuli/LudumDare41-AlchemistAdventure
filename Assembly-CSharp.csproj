@@ -64,17 +64,15 @@
     <Compile Include="Assets\Scripts\BombCollectable.cs" />
     <Compile Include="Assets\Scripts\Bone.cs" />
     <Compile Include="Assets\Scripts\CameraManager.cs" />
-    <Compile Include="Assets\Scripts\CameraShake.cs" />
     <Compile Include="Assets\Scripts\Disarm.cs" />
-    <Compile Include="Assets\Scripts\DontDestroyOnLoad.cs" />
     <Compile Include="Assets\Scripts\EnableLevel.cs" />
     <Compile Include="Assets\Scripts\EndScreen.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\Explode.cs" />
     <Compile Include="Assets\Scripts\Explosion.cs" />
+    <Compile Include="Assets\Scripts\FlipSprite.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GUIManager.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Portal_MainMenu.cs" />
@@ -82,20 +80,18 @@
     <Compile Include="Assets\Scripts\RandomTextColorNoPause.cs" />
     <Compile Include="Assets\Scripts\RB2D_Extension.cs" />
     <Compile Include="Assets\Scripts\RenderOrder.cs" />
-    <Compile Include="Assets\Scripts\Tile.cs" />
-    <Compile Include="Assets\Scripts\Wall_Breakable.cs" />
     <Compile Include="Assets\Scripts\WaterIce.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>E:/Peliprojektit/LudumDare41/LudumDare41/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>E:/Peliprojektit/LudumDare41/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/Peliprojektit/LudumDare41/LudumDare41/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>E:/Peliprojektit/LudumDare41/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>E:/Peliprojektit/LudumDare41/LudumDare41/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>E:/Peliprojektit/LudumDare41/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/Peliprojektit/LudumDare41/LudumDare41/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>E:/Peliprojektit/LudumDare41/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.2.0b1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

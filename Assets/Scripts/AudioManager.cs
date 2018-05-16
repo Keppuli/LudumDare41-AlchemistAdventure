@@ -5,13 +5,14 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour {
 
     private AudioSource audioSource;
+
     void Awake()
     {
-        //Ensure the script is not deleted while loading
+        // Ensure the object is not deleted while changing scene
         DontDestroyOnLoad(this);
-        //Make sure there are copies are not made of the GameObject when it isn't destroyed
+        // Make sure there are only one instance
         if (FindObjectsOfType(GetType()).Length > 1)
-            //Destroy any copies
+            // Destroy if copies found
             Destroy(gameObject);
     }
 
@@ -19,9 +20,11 @@ public class AudioManager : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
 	}
 
+    //  Method for centralized audio playback
     public void Play(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip);
+        // Reference to the audio clip is stored and given by the calling object
+        audioSource.PlayOneShot(clip);  
     }
 
 }

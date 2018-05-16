@@ -5,22 +5,16 @@ using UnityEngine;
 public class GUIManager : MonoBehaviour {
     void Awake()
     {
+        // Se up references automatically, as it sometimes is lost duting scene load
         GetComponent<Canvas>().worldCamera = Camera.main;
-        //Ensure the script is not deleted while loading
+
+        // Ensure the object is not deleted while changing scene
         DontDestroyOnLoad(this);
-        //Make sure there are copies are not made of the GameObject when it isn't destroyed
+        // Make sure there are only one instance
         if (FindObjectsOfType(GetType()).Length > 1)
-            //Destroy any copies
+            // Destroy if copies found
             Destroy(gameObject);
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

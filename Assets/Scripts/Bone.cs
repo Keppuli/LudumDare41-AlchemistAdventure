@@ -5,28 +5,23 @@ using UnityEngine;
 public class Bone : MonoBehaviour {
 
     private Rigidbody2D rb;
-    private float targetTime;
+    public Vector3 explosionPosition; // Set by enemy.cs BlowUp()
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Start with random rotation
         transform.Rotate(Vector3.forward, Random.Range(-45, 45));
 
-        rb.AddExplosionForce(1009, new Vector2(transform.position.x - 0.1f, transform.position.y-0.1f), 1500);
+        // Add force when created(by explosion)
+        AddExplosionForce(explosionPosition);
+    }
+
+    // Called by explosion to push bones around
+    public void AddExplosionForce(Vector3 explosionPosition)
+    {
+        rb.AddExplosionForce(1000, new Vector2(explosionPosition.x, explosionPosition.y), 1500);
 
     }
-    public void AddExplosionForce() //https://forum.unity.com/threads/need-rigidbody2d-addexplosionforce.212173/#post-1426983
-    {
-        var dir = (rb.transform.position - new Vector3(0f,0f,0f));
-        float wearoff = 1 - (dir.magnitude / 2f);
-        rb.AddForce(dir.normalized * 2 * wearoff);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        targetTime -= Time.deltaTime;                                           //Count down timer
 
-        if (targetTime <= 0.0f)                                                 //Timer done   
-        {
-        }
-    }
 }

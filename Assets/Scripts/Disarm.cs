@@ -9,8 +9,11 @@ public class Disarm : MonoBehaviour {
 
     void Awake()
     {
+        // Automatically set references
         audioManager = GameObject.FindGameObjectWithTag("AudioManager");
     }
+
+    // When collision happens with player, take all bombs away
     void OnTriggerEnter2D(Collider2D col)
     {
        

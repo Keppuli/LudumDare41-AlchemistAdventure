@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4671559139281728}
   - component: {fileID: 212695649839828388}
   - component: {fileID: 61818577047824672}
-  - component: {fileID: 114273852967395634}
   m_Layer: 0
   m_Name: tile_breakable_stone
   m_TagString: Destructible
@@ -36,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1413071196034336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalPosition: {x: -27.03, y: 7.02, z: -90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -67,17 +66,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114273852967395634
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1413071196034336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea98b58070cd1184989f34db648d5f83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &212695649839828388
 SpriteRenderer:
   m_ObjectHideFlags: 1
